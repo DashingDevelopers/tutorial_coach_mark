@@ -16,16 +16,22 @@ export 'package:tutorial_coach_mark/src/util.dart';
 class TutorialCoachMark {
   final List<TargetFocus> targets;
   final FutureOr<void> Function(TargetFocus)? onClickTarget;
-  final FutureOr<void> Function(TargetFocus, TapDownDetails)?
-      onClickTargetWithTapPosition;
+  final FutureOr<void> Function(TargetFocus, TapDownDetails)? onClickTargetWithTapPosition;
   final FutureOr<void> Function(TargetFocus)? onClickOverlay;
   final Function()? onFinish;
   final double paddingFocus;
+
   final Function()? onSkip;
+  final Function()? onSuperSkip;
   final AlignmentGeometry alignSkip;
+  final AlignmentGeometry alignSuperSkip;
   final String textSkip;
   final TextStyle textStyleSkip;
   final bool hideSkip;
+  final bool hideSuperSkip;
+  final String textSuperSkip;
+  final TextStyle textStyleSuperSkip;
+
   final Color colorShadow;
   final double opacityShadow;
   final GlobalKey<TutorialCoachMarkWidgetState> _widgetKey = GlobalKey();
@@ -34,6 +40,7 @@ class TutorialCoachMark {
   final Duration pulseAnimationDuration;
   final bool pulseEnable;
   final Widget? skipWidget;
+  final Widget? superSkipWidget;
   final bool showSkipInLastTarget;
   final ImageFilter? imageFilter;
 
@@ -48,16 +55,22 @@ class TutorialCoachMark {
     this.onFinish,
     this.paddingFocus = 10,
     this.onSkip,
+    this.onSuperSkip,
     this.alignSkip = Alignment.bottomRight,
+    this.alignSuperSkip = Alignment.bottomLeft,
     this.textSkip = "SKIP",
+    this.textSuperSkip = "Super SKIP",
     this.textStyleSkip = const TextStyle(color: Colors.white),
+    this.textStyleSuperSkip = const TextStyle(color: Colors.white),
     this.hideSkip = false,
+    this.hideSuperSkip = false,
     this.opacityShadow = 0.8,
     this.focusAnimationDuration = const Duration(milliseconds: 600),
     this.unFocusAnimationDuration = const Duration(milliseconds: 600),
     this.pulseAnimationDuration = const Duration(milliseconds: 500),
     this.pulseEnable = true,
     this.skipWidget,
+    this.superSkipWidget,
     this.showSkipInLastTarget = true,
     this.imageFilter,
   }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
@@ -73,11 +86,15 @@ class TutorialCoachMark {
           clickOverlay: onClickOverlay,
           paddingFocus: paddingFocus,
           onClickSkip: skip,
+          onClickSuperSkip: superSkip,
           alignSkip: alignSkip,
+          alignSuperSkip: alignSuperSkip,
           skipWidget: skipWidget,
+          superSkipWidget: superSkipWidget,
           textSkip: textSkip,
           textStyleSkip: textStyleSkip,
           hideSkip: hideSkip,
+          hideSuperSkip: hideSuperSkip,
           colorShadow: colorShadow,
           opacityShadow: opacityShadow,
           focusAnimationDuration: focusAnimationDuration,
@@ -137,6 +154,11 @@ class TutorialCoachMark {
 
   void skip() {
     onSkip?.call();
+    _removeOverlay();
+  }
+
+  void superSkip() {
+    onSuperSkip?.call();
     _removeOverlay();
   }
 
