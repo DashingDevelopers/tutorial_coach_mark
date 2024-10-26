@@ -20,7 +20,7 @@ class TutorialCoachMarkWidget extends StatefulWidget {
     this.alignSkip = Alignment.bottomRight,
     this.alignSuperSkip = Alignment.bottomLeft,
     this.textSkip = "SKIP",
-    this.textSuperSkip = "END TUTORIAL",
+    this.textSuperSkip = "EXIT TUTORIAL",
     this.onClickSkip,
     this.onClickSuperSkip,
     this.colorShadow = Colors.black,
@@ -304,7 +304,7 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
           opacity: showContent ? 1 : 0,
           duration: const Duration(milliseconds: 300),
           child: InkWell(
-            onTap: skip,
+            onTap: superSkip,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: IgnorePointer(
