@@ -13,19 +13,14 @@ TargetPosition? getTargetCurrent(
     var key = target.keyTarget!;
 
     try {
-      final RenderBox renderBoxRed =
-          key.currentContext!.findRenderObject() as RenderBox;
+      final RenderBox renderBoxRed = key.currentContext!.findRenderObject() as RenderBox;
       final size = renderBoxRed.size;
 
       BuildContext? context;
       if (rootOverlay) {
-        context = key.currentContext!
-            .findRootAncestorStateOfType<OverlayState>()
-            ?.context;
+        context = key.currentContext!.findRootAncestorStateOfType<OverlayState>()?.context;
       } else {
-        context = key.currentContext!
-            .findAncestorStateOfType<NavigatorState>()
-            ?.context;
+        context = key.currentContext!.findAncestorStateOfType<NavigatorState>()?.context;
       }
       Offset offset;
       if (context != null) {
@@ -39,7 +34,7 @@ TargetPosition? getTargetCurrent(
 
       return TargetPosition(size, offset);
     } catch (e) {
-      throw NotFoundTargetException();
+      throw NotFoundTargetException(target.identify);
     }
   } else {
     return target.targetPosition;
@@ -62,8 +57,7 @@ extension StateExt on State {
 }
 
 class NotFoundTargetException extends FormatException {
-  NotFoundTargetException()
-      : super('It was not possible to obtain target position.');
+  NotFoundTargetException(String identify) : super('It was not possible to obtain target position. for $identify');
 }
 
 void postFrame(VoidCallback callback) {
